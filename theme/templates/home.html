@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Accueil - Admin{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-4">
+        Bienvenue sur votre Dashboard
+    </h1>
+    <p class="text-gray-600 mb-6">
+        Ceci est un bloc stylisé avec <span class="text-blue-500 font-mono">Tailwind CSS</span>.
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-4 bg-indigo-50 border-l-4 border-indigo-500 rounded">
+            <h3 class="font-bold text-indigo-700">Questionnaires</h3>
+            <p class="text-sm">Gérez vos formulaires actifs.</p>
+        </div>
+        <div class="p-4 bg-green-50 border-l-4 border-green-500 rounded">
+            <h3 class="font-bold text-green-700">Utilisateurs</h3>
+            <p class="text-sm">Affectez des rôles et des groupes.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
