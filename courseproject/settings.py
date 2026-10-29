@@ -118,6 +118,10 @@ STATICFILES_DIRS = [
     BASE_DIR / 'theme' / 'static',
 ]
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 # Gestion intelligente du stockage statique (Dev vs Production)
 if DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'

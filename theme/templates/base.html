@@ -37,8 +37,8 @@
             <!-- Menu Desktop -->
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
                 <a href="{% url 'home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "Accueil" %}</a>
-                <a href="{% url 'home' %}#about" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "À propos" %}</a>
                 <a href="{% url 'home' %}#blog" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "Articles" %}</a>
+                 <a href="{% url 'about' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "À propos" %}</a>
             </div>
 
             <!-- Contrôles (Langue + Dark Mode + Bouton Mobile) -->
@@ -74,8 +74,8 @@
         <!-- Menu Mobile déroulant -->
         <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
             <a href="{% url 'home' %}" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "Accueil" %}</a>
-            <a href="{% url 'home' %}#about" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "À propos" %}</a>
             <a href="{% url 'home' %}#blog" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "Articles" %}</a>
+             <a href="{% url 'home' %}#about" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "À propos" %}</a>
         </div>
     </nav>
 
@@ -113,7 +113,7 @@
 
         // SCRIPT DE DÉCLENCHEMENT AUTOMATIQUE LE JOUR J
         const birthdayMonth = 10; // Mois (1 à 12) - Ex: Octobre = 10
-        const birthdayDay = 27;   // Jour (1 à 31) - Ex: le 27
+        const birthdayDay = 30 // Jour (1 à 31) - Ex: le 27
 
         const today = new Date();
         const currentMonth = today.getMonth() + 1;

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% translate "Tous les Articles" %} | Dr. Blog{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12 md:py-20 space-y-12">
+    
+    <!-- EN-TÊTE DE LA PAGE -->
+    <div class="text-center space-y-4 max-w-2xl mx-auto">
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            {% translate "Publications & Conseils Santé" %}
+        </h1>
+        <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300">
+            {% translate "Explorez l'ensemble de mes articles de recherche, analyses médicales et recommandations pour votre bien-être." %}
+        </p>
+    </div>
+
+    <!-- FILTRES PAR CATÉGORIE -->
+    {% if categories %}
+    <div class="flex flex-wrap justify-center gap-2 pt-2">
+        <a href="{% url 'articles_list' %}" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition {% if not selected_category %}bg-sky-500 text-white shadow{% else %}bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800{% endif %}">
+            {% translate "Tous" %}
+        </a>
+        {% for cat in categories %}
+            <a href="?category={{ cat.slug }}" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition {% if selected_category == cat.slug %}bg-sky-500 text-white shadow{% else %}bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800{% endif %}">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- GRILLE DES ARTICLES -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% if articles %}
+            {% for article in articles %}
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-4 flex flex-col justify-between shadow-sm hover:shadow-md transition">
+                    <div class="space-y-3">
+                        {% if article.image %}
+                            <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-48 object-cover rounded-xl">
+                        {% endif %}
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-semibold text-sky-600 dark:text-sky-400">{{ article.created_at|date:"d M Y" }}</span>
+                            {% if article.category %}
+                                <span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-0.5 rounded-full font-medium">{{ article.category.name }}</span>
+                            {% endif %}
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ article.title }}</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 line-clamp-3">{{ article.content }}</p>
+                    </div>
+                    <a href="{% url 'article_detail' article.slug %}" class="text-xs font-medium text-sky-500 hover:underline pt-2">{% translate "Lire la suite &rarr;" %}</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-span-full bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-12 text-center space-y-4 shadow-sm">
+                <span class="text-4xl block">📝</span>
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{% translate "Aucun article trouvé" %}</h3>
+                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+                    {% translate "Il n'y a pas encore d'articles publiés dans cette catégorie." %}
+                </p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- PAGINATION -->
+    {% if articles.has_other_pages %}
+    <div class="flex justify-center items-center space-x-2 pt-6">
+        {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                &larr; {% translate "Précédent" %}
+            </a>
+        {% endif %}
+
+        <span class="text-xs font-medium text-slate-500 px-3">
+            {% translate "Page" %} {{ articles.number }} {% translate "sur" %} {{ articles.paginator.num_pages }}
+        </span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}" class="px-4 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+                {% translate "Suivant" %} &rarr;
+            </a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- RETOUR À L'ACCUEIL -->
+    <div class="text-center pt-6">
+        <a href="{% url 'home' %}" class="inline-flex items-center space-x-2 text-sky-600 dark:text-sky-400 font-bold hover:underline text-sm">
+            <span>&larr;</span> <span>{% translate "Retour à l'accueil" %}</span>
+        </a>
+    </div>
+
+</div>
+{% endblock %}

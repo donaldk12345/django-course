@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ article.title }} | Dr. Blog{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12 md:py-16 space-y-12">
+    
+    <!-- ARTICLE EN-TÊTE -->
+    <article class="space-y-6">
+        <div class="space-y-3 text-center">
+            <a href="{% url 'home' %}#blog" class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline">
+                &larr; {% translate "Retour aux articles" %}
+            </a>
+            <span class="block text-xs font-medium text-slate-400">{{ article.created_at|date:"d M Y" }}</span>
+            <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+                {{ article.title }}
+            </h1>
+        </div>
+
+        {% if article.image %}
+            <div class="rounded-3xl overflow-hidden shadow-md border border-slate-100 dark:border-slate-800">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="w-full h-72 sm:h-96 object-cover">
+            </div>
+        {% endif %}
+
+        <!-- CONTENU DE L'ARTICLE -->
+        <div class="prose dark:prose-invert max-w-none text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed space-y-4">
+            {{ article.content|safe }}
+        </div>
+    </article>
+
+    <!-- SECTION COMMENTAIRES -->
+    <div class="space-y-8 pt-10 border-t border-slate-200 dark:border-slate-800">
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+            {% translate "Commentaires" %} ({{ comments.count|default:0 }})
+        </h3>
+
+        <!-- Liste des commentaires existants -->
+        <div class="space-y-4">
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-2 shadow-sm">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900 dark:text-white">{{ comment.author_name }}</span>
+                            <span class="text-xs text-slate-400">{{ comment.created_at|date:"d M Y à H:i" }}</span>
+                        </div>
+                        <!-- Corrigé de comment.text à comment.content -->
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">{{ comment.content }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-xs text-slate-500 italic">{% translate "Soyez le premier à laisser un commentaire sur cet article !" %}</p>
+            {% endif %}
+        </div>
+
+        <!-- Formulaire d'ajout de commentaire -->
+        <div class="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm space-y-4">
+            <h4 class="font-bold text-sm text-slate-900 dark:text-white">{% translate "Laisser un commentaire" %}</h4>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">{% translate "Votre nom" %}</label>
+                    <input type="text" name="author_name" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">{% translate "Votre message" %}</label>
+                    <!-- Corrigé de name="text" à name="content" -->
+                    <textarea name="content" rows="4" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+                </div>
+                <button type="submit" class="bg-sky-500 hover:bg-sky-600 text-white font-bold px-6 py-2.5 rounded-xl text-xs sm:text-sm transition-colors cursor-pointer shadow">
+                    {% translate "Publier le commentaire" %}
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -30,7 +30,7 @@ class Doctor(models.Model):
 
 class Article(models.Model):
     title = models.CharField(max_length=200, verbose_name="Titre de l'article")
-    slug = models.SlugField(unique=True, blank=True)
+    slug = models.SlugField(max_length=250, unique=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Catégorie")
     author = models.ForeignKey(Doctor, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Signé par (Auteur / Collègue)")
     content = models.TextField(verbose_name="Contenu")

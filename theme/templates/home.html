@@ -6,11 +6,9 @@
 
 {% block content %}
 <div class="max-w-6xl mx-auto px-4 py-12 md:py-20 space-y-20">
-    
-    <!-- BANNIÈRE & PRÉSENTATION PERSONNELLE -->
+
     <div id="about" class="flex flex-col-reverse md:flex-row items-center gap-12 md:gap-16">
         
-        <!-- TEXTE (À la première personne) -->
         <div class="w-full md:w-1/2 space-y-6 text-center md:text-left">
             <div class="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-300 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide border-l-4 border-sky-400">
                 <span>🩺 {% translate "Médecine & Recherche" %}</span>
@@ -27,7 +25,6 @@
                 {% translate "Moi c'est le Dr. [Nom], passionnée par la médecine et l'innovation. J'ai créé cet espace pour partager mes réflexions médicales, mes recherches et échanger directement avec mes patients et confrères. Installez-vous confortablement !" %}
             </p>
 
-            <!-- CURRICULUM EXPRESS -->
             <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-sky-100 dark:border-slate-800 space-y-3 max-w-xl mx-auto md:mx-0 text-left shadow-sm">
                 <h3 class="font-bold text-xs tracking-wider uppercase text-sky-600 dark:text-sky-400">{% translate "Mon parcours" %}</h3>
                 <ul class="space-y-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
@@ -41,7 +38,6 @@
             </div>
         </div>
 
-        <!-- PHOTO DE PRÉSENTATION -->
         <div class="w-full md:w-1/2 flex justify-center">
             <div class="max-w-sm w-full px-4">
                 <div class="bg-white dark:bg-slate-900 p-3 rounded-3xl border border-sky-200 dark:border-slate-800 shadow-md">
@@ -58,20 +54,20 @@
         </div>
     </div>
 
-    <!-- SECTION PRÉSENTATION DES CONFRÈRES & COLLÈGUES -->
+
     <div class="space-y-8 pt-10 border-t border-slate-200 dark:border-slate-800">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div>
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{% translate "Mes Confrères & Collègues" %}</h2>
                 <p class="text-sm text-slate-600 dark:text-slate-400">{% translate "Les brillants professionnels de santé qui partagent cette aventure avec moi." %}</p>
             </div>
-            <!-- Bouton "Voir plus" redirigeant vers la liste complète -->
+
             <a href="{% url 'doctors_list' %}" class="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 font-bold px-5 py-2.5 rounded-xl border border-sky-200 dark:border-sky-800 transition-all text-xs sm:text-sm">
                 <span>{% translate "Voir tous les médecins" %}</span> <span>&rarr;</span>
             </a>
         </div>
 
-        <!-- GRILLE DES MÉDECINS (Aperçu) -->
+
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {% if doctors_preview %}
                 {% for doc in doctors_preview %}
@@ -88,7 +84,7 @@
                             </div>
                             <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-2">{{ doc.bio }}</p>
                         </div>
-                        <a href="{% url 'doctors_list' %}" class="text-xs font-medium text-sky-500 hover:underline pt-2">{% translate "En savoir plus &rarr;" %}</a>
+                        <a href="{% url 'doctor_detail' doc.id %}" class="text-xs font-medium text-sky-500 hover:underline pt-2">{% translate "En savoir plus &rarr;" %}</a>
                     </div>
                 {% endfor %}
             {% else %}
@@ -103,11 +99,15 @@
         </div>
     </div>
 
-    <!-- SECTION ARTICLES RÉCENTS -->
     <div id="blog" class="space-y-8 pt-10 border-t border-slate-200 dark:border-slate-800">
-        <div class="text-center md:text-left space-y-2">
-            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{% translate "Mes derniers articles" %}</h2>
-            <p class="text-sm text-slate-600 dark:text-slate-400">{% translate "Retrouvez mes publications de recherche et conseils santé." %}</p>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">{% translate "Mes derniers articles" %}</h2>
+                <p class="text-sm text-slate-600 dark:text-slate-400">{% translate "Retrouvez mes publications de recherche et conseils santé." %}</p>
+            </div>
+            <a href="{% url 'articles_list' %}" class="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 font-bold px-5 py-2.5 rounded-xl border border-sky-200 dark:border-sky-800 transition-all text-xs sm:text-sm">
+                <span>{% translate "Voir tous les articles" %}</span> <span>&rarr;</span>
+            </a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <!-- CARTE D'ACTIVATION / PETITE SURPRISE -->
+
     <div class="bg-gradient-to-br from-sky-400 to-blue-600 rounded-3xl p-8 sm:p-12 text-center space-y-6 text-white max-w-3xl mx-auto shadow-md">
         <h2 class="text-xl sm:text-2xl font-bold">
             {% translate "Prête à prendre les commandes de ton espace ?" %}
@@ -152,7 +152,7 @@
         </div>
     </div>
 
-    <!-- POPUP SURPRISE -->
+
     <div id="surprisePopup" style="display: none;" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 sm:p-8 border border-slate-100 dark:border-slate-800 text-center space-y-5 shadow-2xl">
             <span class="text-4xl block animate-bounce">💖</span>
