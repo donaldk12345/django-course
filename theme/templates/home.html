@@ -2,7 +2,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Dr. {{ doctor_name|default:"[Nom]" }} | Espace Médical & Blog{% endblock %}
+{% block title %} Espace Médical & Blog{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto px-4 py-12 md:py-20 space-y-20">
@@ -22,7 +22,7 @@
             </h1>
 
             <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl mx-auto md:mx-0">
-                {% translate "Moi c'est le Dr. [Nom], passionnée par la médecine et l'innovation. J'ai créé cet espace pour partager mes réflexions médicales, mes recherches et échanger directement avec mes patients et confrères. Installez-vous confortablement !" %}
+                {% translate "Moi c'est le Dr. Mercy Berinyuy, passionnée par la médecine et l'innovation. J'ai créé cet espace pour partager mes réflexions médicales, mes recherches et échanger directement avec mes patients et confrères. Installez-vous confortablement !" %}
             </p>
 
             <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-sky-100 dark:border-slate-800 space-y-3 max-w-xl mx-auto md:mx-0 text-left shadow-sm">
@@ -32,7 +32,7 @@
                         <span>🎓</span> <span><strong>{% translate "Diplôme :" %}</strong> {% translate "Doctorat en Médecine (Cameroun)" %}</span>
                     </li>
                     <li class="flex items-center space-x-2">
-                        <span>🏢</span> <span><strong>{% translate "Statut :" %}</strong> {% translate "Cycle de Spécialisation Médicale" %}</span>
+                        <span>🏢</span> <span><strong>{% translate "Statut :" %}</strong> {% translate "Médecin généraliste" %}</span>
                     </li>
                 </ul>
             </div>
@@ -74,12 +74,12 @@
                     <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-100 dark:border-slate-800 space-y-4 shadow-sm text-center flex flex-col justify-between">
                         <div class="space-y-3">
                             {% if doc.photo %}
-                                <img src="{{ doc.photo.url }}" alt="Dr. {{ doc.name }}" class="w-20 h-20 mx-auto rounded-full object-cover border-2 border-sky-400 shadow-sm">
+                                <img src="{{ doc.photo.url }}" alt="{{ doc.name }}" class="w-20 h-20 mx-auto rounded-full object-cover border-2 border-sky-400 shadow-sm">
                             {% else %}
                                 <div class="w-20 h-20 mx-auto rounded-full bg-sky-50 dark:bg-slate-800 flex items-center justify-center text-3xl">🩺</div>
                             {% endif %}
                             <div>
-                                <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Dr. {{ doc.name }}</h3>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">{{ doc.name }}</h3>
                                 <span class="text-xs font-semibold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/50 px-2.5 py-1 rounded-full inline-block mt-1">{{ doc.speciality }}</span>
                             </div>
                             <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-2">{{ doc.bio }}</p>
@@ -138,16 +138,17 @@
     </div>
 
 
+
     <div class="bg-gradient-to-br from-sky-400 to-blue-600 rounded-3xl p-8 sm:p-12 text-center space-y-6 text-white max-w-3xl mx-auto shadow-md">
         <h2 class="text-xl sm:text-2xl font-bold">
-            {% translate "Prête à prendre les commandes de ton espace ?" %}
+            {% translate "Besoin d'un accompagnement ou d'un conseil médical ?" %}
         </h2>
         <p class="text-xs sm:text-sm text-sky-100 max-w-lg mx-auto leading-relaxed">
-            {% translate "Cet espace médical t'appartient entièrement. C'est à toi de débloquer et d'accorder les privilèges administrateur complets !" %}
+            {% translate "Explorez nos articles de recherche, découvrez l'équipe médicale et restez informés des dernières actualités en matière de santé." %}
         </p>
         <div>
             <button onclick="togglePopup()" class="inline-flex items-center space-x-2 bg-white text-sky-600 hover:bg-sky-50 font-bold px-6 py-3 rounded-xl transition-all transform hover:-translate-y-0.5 cursor-pointer text-sm shadow">
-                <span>🚀 {% translate "Activer mes privilèges administrateur" %}</span>
+                <span>🩺 {% translate "En savoir plus sur nos engagements" %}</span>
             </button>
         </div>
     </div>
@@ -155,20 +156,19 @@
 
     <div id="surprisePopup" style="display: none;" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 sm:p-8 border border-slate-100 dark:border-slate-800 text-center space-y-5 shadow-2xl">
-            <span class="text-4xl block animate-bounce">💖</span>
+            <span class="text-4xl block animate-bounce">🩺</span>
+            
             <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">
-                {% translate "Protocole de Sécurité Spécial" %}
+                {% translate "Espace Santé & Partage" %}
             </h3>
+            
             <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                {% if LANGUAGE_CODE == 'en' %}
-                    "To unlock full administrator privileges and officially launch your blog for your birthday, the system requires a <strong>second face-to-face meeting</strong> granted by you. Shall we validate the date? 😉"
-                {% else %}
-                    "Pour valider tes pleins pouvoirs d'administrateur et lancer officiellement ce blog pour ton anniversaire, l'algorithme exige une <strong>deuxième rencontre en face à face</strong> accordée par tes soins. On valide la date ? 😉"
-                {% endif %}
+                {% blocktrans %}Bienvenue sur cet espace dédié à l'information médicale et au partage scientifique. Merci de votre visite et bonne lecture de nos articles !{% endblocktrans %}
             </p>
+            
             <div class="pt-2">
-                <button onclick="togglePopup()" class="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-3 rounded-xl transition-colors cursor-pointer text-sm">
-                    {% translate "Fermer le terminal" %}
+                <button onclick="togglePopup()" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 rounded-xl transition-colors cursor-pointer text-sm shadow">
+                    {% translate "Fermer" %}
                 </button>
             </div>
         </div>

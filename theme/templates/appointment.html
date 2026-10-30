@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% translate "Prendre Rendez-vous" %} {% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 py-12 md:py-16 space-y-8">
+
+    <div class="text-center space-y-3">
+        <span class="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-300 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide border-l-4 border-sky-400">
+            📅 {% translate "Consultation" %}
+        </span>
+        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            {% translate "Prendre un Rendez-vous" %}
+        </h1>
+        <p class="text-sm text-slate-600 dark:text-slate-300">
+            {% translate "Remplissez ce formulaire pour planifier une consultation avec l'un de nos praticiens." %}
+        </p>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 px-4 py-3 rounded-2xl text-sm text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm">
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="space-y-2">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{% translate "Médecin souhaité" %}</label>
+                {{ form.doctor }}
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{% translate "Nom complet" %}</label>
+                    {{ form.patient_name }}
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{% translate "Téléphone" %}</label>
+                    {{ form.patient_phone }}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{% translate "Adresse e-mail" %}</label>
+                    {{ form.patient_email }}
+                </div>
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{% translate "Date et heure souhaitées" %}</label>
+                    {{ form.preferred_date }}
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{% translate "Motif de consultation" %}</label>
+                {{ form.reason }}
+            </div>
+
+   <div class="pt-2 w-full">
+    <button type="submit" class="w-full block bg-sky-600 hover:bg-sky-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all text-sm cursor-pointer text-center">
+        {% translate "Confirmer la demande de rendez-vous" %}
+    </button>
+</div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

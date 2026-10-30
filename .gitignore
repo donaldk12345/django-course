@@ -1,0 +1,26 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+env/
+ENV/
+
+# --- Django ---
+*.sqlite3
+db.sqlite3-journal
+media/
+
+# --- Variables d'environnement & Sécurité ---
+.env
+
+# --- IDE / Éditeurs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Tailwind CSS / Node ---
+node_modules/
+theme/static/css/dist/styles.css

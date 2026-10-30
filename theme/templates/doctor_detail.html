@@ -2,19 +2,18 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Dr. {{ doctor.name }} | Espace Médical{% endblock %}
+{% block title %}{{ doctor.name }} | Espace Médical{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto px-4 py-12 md:py-16 space-y-12">
     
-    <!-- RETOUR -->
+
     <div>
         <a href="{% url 'doctors_list' %}" class="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline">
-            &larr; {% translate "Retour à la liste des médecins" %}
+           {% translate "Retour à la liste des médecins" %}
         </a>
     </div>
 
-    <!-- PROFIL DU MÉDECIN -->
     <div class="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-100 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
         {% if doctor.photo %}
             <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" class="w-36 h-36 rounded-full object-cover border-4 border-sky-400 shadow-md shrink-0">
@@ -38,7 +37,6 @@
         </div>
     </div>
 
-    <!-- ARTICLES ÉCRITS PAR CE MÉDECIN -->
     <div class="space-y-6 pt-6">
         <h3 class="text-xl font-bold text-slate-900 dark:text-white">
             {% translate "Articles publiés par " %} {{ doctor.name }}

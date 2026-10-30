@@ -1,6 +1,6 @@
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
-
+from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -88,10 +88,18 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization (i18n) configuré pour le bilinguisme au Cameroun
-LANGUAGE_CODE = 'fr'  # Langue par défaut à l'ouverture du site
 
-TIME_ZONE = 'Africa/Douala'  # Fuseau horaire du Cameroun
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='ssl0.ovh.net')
+EMAIL_PORT = config('EMAIL_PORT', default=465, cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=True, cast=bool)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+LANGUAGE_CODE = 'fr' 
+
+TIME_ZONE = 'Africa/Douala'  
 
 USE_I18N = True
 
@@ -102,18 +110,15 @@ LANGUAGES = [
     ('en', _('Anglais')),
 ]
 
-# Le dossier où Django va stocker les dictionnaires de traduction (.po)
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
-# Static files (CSS, JavaScript, Images)
+
 STATIC_URL = 'static/'
 
-# Dossier final de production où collectstatic va compiler le CSS Tailwind purifié
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Indique à Django d'inclure les fichiers compilés par l'application theme de Tailwind
 STATICFILES_DIRS = [
     BASE_DIR / 'theme' / 'static',
 ]
@@ -122,7 +127,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Gestion intelligente du stockage statique (Dev vs Production)
+
 if DEBUG:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:

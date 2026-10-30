@@ -53,3 +53,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"Commentaire de {self.author_name} sur {self.article.title}"
+    
+class Appointment(models.Model):
+    doctor = models.ForeignKey('Doctor', on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Médecin concerné")
+    patient_name = models.CharField(max_length=100, verbose_name="Nom du patient")
+    patient_email = models.EmailField(verbose_name="E-mail du patient")
+    patient_phone = models.CharField(max_length=20, verbose_name="Téléphone")
+    preferred_date = models.DateTimeField(verbose_name="Date et heure souhaitées")
+    reason = models.TextField(verbose_name="Motif de la consultation")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date de demande")
+    is_confirmed = models.BooleanField(default=False, verbose_name="Confirmé")
+
+    def __str__(self):
+   
+        return f"Rendez-vous de {self.patient_name} le {self.preferred_date}"

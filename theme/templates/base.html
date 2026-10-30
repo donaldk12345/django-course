@@ -6,11 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Dr. Espace Médical{% endblock %}</title>
+    <title>{% block title %}Espace Médical{% endblock %}</title>
     
     {% tailwind_css %}
 
-    <!-- Script Dark Mode instantané et persistant -->
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -19,31 +18,32 @@
         }
     </script>
 
-    <!-- BIBLIOTHÈQUE DE CONFETTIS POUR L'ANNIVERSAIRE -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans antialiased transition-colors duration-300 selection:bg-sky-500 selection:text-white flex flex-col min-h-screen">
     
-    <!-- NAVBAR RESPONSIVE AVEC MENU BURGER MOBILE -->
-    <nav class="bg-white/90 dark:bg-slate-900/90 shadow-sm sticky top-0 z-50 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
+ <nav class="bg-white/90 dark:bg-slate-900/90 shadow-sm sticky top-0 z-50 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <!-- Logo -->
+
             <a href="{% url 'home' %}" class="flex items-center space-x-2">
                 <span class="text-xl font-black tracking-tight bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">
-                    🩺 Dr. Blog
+                    🩺 Dr. Mercy
                 </span>
             </a>
 
-            <!-- Menu Desktop -->
+            <!-- MENU DESKTOP -->
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
                 <a href="{% url 'home' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "Accueil" %}</a>
                 <a href="{% url 'home' %}#blog" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "Articles" %}</a>
-                 <a href="{% url 'about' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "À propos" %}</a>
+                <a href="{% url 'about' %}" class="hover:text-sky-600 dark:hover:text-sky-400 transition">{% translate "À propos" %}</a>
+                
+                <a href="{% url 'appointment' %}" class="bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 text-sky-600 dark:text-sky-300 font-bold px-4 py-2 rounded-xl border border-sky-200 dark:border-sky-800 transition-all text-xs">
+                    📅 {% translate "Prendre RDV" %}
+                </a>
             </div>
 
-            <!-- Contrôles (Langue + Dark Mode + Bouton Mobile) -->
             <div class="flex items-center space-x-3">
-                <!-- Sélecteur de Langue -->
+
                 <form action="{% url 'set_language' %}" method="post" class="inline-block">
                     {% csrf_token %}
                     <input name="next" type="hidden" value="{{ request.get_full_path }}">
@@ -58,44 +58,40 @@
                     </select>
                 </form>
 
-                <!-- Bouton Dark Mode -->
+
                 <button onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition cursor-pointer" title="Basculer le thème">
                     <svg class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     <svg class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                 </button>
 
-                <!-- Bouton Menu Burger Mobile -->
+                <!-- Bouton Menu Mobile -->
                 <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 focus:outline-none">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Menu Mobile déroulant -->
         <div id="mobileMenu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
             <a href="{% url 'home' %}" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "Accueil" %}</a>
             <a href="{% url 'home' %}#blog" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "Articles" %}</a>
-             <a href="{% url 'home' %}#about" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "À propos" %}</a>
+            <a href="{% url 'about' %}" class="block py-2 text-sm font-medium hover:text-sky-500">{% translate "À propos" %}</a>
+            <a href="{% url 'appointment' %}" class="block py-2 text-sm font-bold text-sky-600 dark:text-sky-400">📅 {% translate "Prendre Rendez-vous" %}</a>
         </div>
     </nav>
 
-    <!-- CONTENU PRINCIPAL -->
     <main class="flex-grow w-full">
         {% block content %}
         {% endblock %}
     </main>
 
-    <!-- FOOTER ÉPURÉ -->
     <footer class="bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 py-8 text-center text-xs text-slate-500 dark:text-slate-400">
         <div class="max-w-6xl mx-auto px-4 space-y-2">
-            <p>© 2026 Dr. Blog • {% translate "Tous droits réservés." %}</p>
+            <p>© 2026 Dr Mercy Berinyuy • {% translate "Tous droits réservés." %}</p>
             <p>{% translate "Conçu avec passion et précision." %}</p>
         </div>
     </footer>
 
-    <!-- SCRIPTS GLOBAUX -->
     <script>
-        // Scripts généraux (Dark Mode & Menu Mobile)
         function toggleDarkMode() {
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark');
@@ -111,27 +107,22 @@
             menu.classList.toggle('hidden');
         }
 
-        // SCRIPT DE DÉCLENCHEMENT AUTOMATIQUE LE JOUR J
-        const birthdayMonth = 10; // Mois (1 à 12) - Ex: Octobre = 10
-        const birthdayDay = 30 // Jour (1 à 31) - Ex: le 27
+        const birthdayMonth = 10; 
+        const birthdayDay = 30 
 
         const today = new Date();
         const currentMonth = today.getMonth() + 1;
         const currentDay = today.getDate();
-
-        // Mettez 'true' à la place de la condition si vous voulez tester le rendu tout de suite !
         const isBirthday = (currentMonth === birthdayMonth && currentDay === birthdayDay);
-        // const isBirthday = true; // <--- Décommentez pour tester le feu d'artifice dès aujourd'hui
+        //const isBirthday = true; 
 
         if (isBirthday) {
             window.addEventListener('DOMContentLoaded', () => {
-                // 1. Afficher la bannière spéciale en haut
+           
                 const banner = document.createElement('div');
                 banner.className = "bg-gradient-to-r from-pink-500 via-sky-400 to-blue-600 text-white text-center py-3 px-4 font-bold text-sm sm:text-base shadow-md sticky top-16 z-40 animate-pulse flex items-center justify-center space-x-2";
                 banner.innerHTML = "<span>🎉 Joyeux Anniversaire ma magnifique Docteure ! Que cette journée soit douce et lumineuse à ton image 🎂</span>";
                 document.querySelector('nav').after(banner);
-
-                // 2. Lancer les feux d'artifice de confettis pendant 15 secondes
                 const duration = 15 * 1000;
                 const animationEnd = Date.now() + duration;
 
